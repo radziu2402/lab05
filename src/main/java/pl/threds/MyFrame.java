@@ -10,6 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
+/*
+mvn compile
+mvn package
+java -cp target/labbb05-1.0-SNAPSHOT.jar pl.threds.MyFrame 7 3
+*/
+
 public class MyFrame extends JFrame {
 
 	public static int numberOfAnimals;
