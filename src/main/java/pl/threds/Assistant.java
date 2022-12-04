@@ -53,7 +53,7 @@ public class Assistant extends Thread {
 				this.direction = "down";
 			}
 			if(rand == 2){
-				this.direction = "up";
+				this.direction = "down";
 			}
 		}
 	}
@@ -145,34 +145,36 @@ public class Assistant extends Thread {
 		if(direction.equals("up")){
 			direction = "down";
 		}
-		if(direction.equals("down")){
+		else if(direction.equals("down")){
 			direction = "up";
 		}
 	}
 
 	private boolean moveDownOrUp(){
-		if(direction.equals("up")){
-			if(MyFrame.assistantsPositions.get(positionOfAssistant - 1) == null){
-				aLabel.setText("  |____|");
-				MyFrame.assistantsPositions.remove(positionOfAssistant);
-				positionOfAssistant--;
-				MyFrame.assistantsPositions.put(positionOfAssistant,numberOfAssistant);
-				aLabel = MyFrame.assistantContainers.get(positionOfAssistant);
-				aLabel.setText("  |" + numberOfAssistant + "_" + amountOfNourishment + "|");
-				return true;
+		synchronized (Assistant.class) {
+			if (direction.equals("up")) {
+				if (MyFrame.assistantsPositions.get(positionOfAssistant - 1) == null) {
+					aLabel.setText("  |____|");
+					MyFrame.assistantsPositions.remove(positionOfAssistant);
+					positionOfAssistant--;
+					MyFrame.assistantsPositions.put(positionOfAssistant, numberOfAssistant);
+					aLabel = MyFrame.assistantContainers.get(positionOfAssistant);
+					aLabel.setText("  |" + numberOfAssistant + "_" + amountOfNourishment + "|");
+					return true;
+				}
 			}
-		}
-		if(direction.equals("down")){
-			if(MyFrame.assistantsPositions.get(positionOfAssistant + 1) == null){
-				aLabel.setText("  |____|");
-				MyFrame.assistantsPositions.remove(positionOfAssistant);
-				positionOfAssistant++;
-				MyFrame.assistantsPositions.put(positionOfAssistant,numberOfAssistant);
-				aLabel = MyFrame.assistantContainers.get(positionOfAssistant);
-				aLabel.setText("  |" + numberOfAssistant + "_" + amountOfNourishment + "|");
-				return true;
+			if (direction.equals("down")) {
+				if (MyFrame.assistantsPositions.get(positionOfAssistant + 1) == null) {
+					aLabel.setText("  |____|");
+					MyFrame.assistantsPositions.remove(positionOfAssistant);
+					positionOfAssistant++;
+					MyFrame.assistantsPositions.put(positionOfAssistant, numberOfAssistant);
+					aLabel = MyFrame.assistantContainers.get(positionOfAssistant);
+					aLabel.setText("  |" + numberOfAssistant + "_" + amountOfNourishment + "|");
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
 	}
 }
